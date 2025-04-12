@@ -1,8 +1,11 @@
 interface Metrics {
-    wifi_speed: number;
-    crowdence: number;
-    plugs: number;
-    noice: number
+    venue: string,
+    metrics: {
+        internet_speed: number;
+        crowdedness: number;
+        charging_plug_availability: number;
+        noise_level: number
+    }
 }
 
 export {Metrics}
