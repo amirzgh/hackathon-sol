@@ -26,7 +26,9 @@ Refine using the user's purpose. Use the user's text description to infer ideal 
 Use common sense reasoning (e.g. Zoom calls need quiet, fast internet; reading requires silence and uncrowded spaces; group work benefits from moderate noise and uncrowded areas).
 Select the single best matching workspace based on the above criteria.
 **Output Format:**
-ensure the output is the following format:
+ensure the output is json like same as following format:
+
+** important: do not send the output using markdpwn code block. just send the json object.**
 {
   "workspace": "Name of the selected workspace",
   "reasoning": "1-2 natural, human-friendly sentences explaining why this workspace suits the user's purpose."
@@ -67,8 +69,6 @@ function useWorkspaceRecommendation() {
                     Here are workspace reviews:
                     {reviewText}
                         ${reviewText}`;
-
-                console.log(userPrompt);
                 
 
 
@@ -88,9 +88,12 @@ function useWorkspaceRecommendation() {
                 if (!res.ok) {
                     throw new Error("Network response was not ok");
                 }
+                
                 return res.json();
             })
-            setRecommendation(response);
+            const data = await response;
+            console.log(data);
+            setRecommendation(data?.choices?.[0]?.message?.content);
         } catch (err) {
             setError("Failed to fetch recommendation");
         } finally {
