@@ -1,6 +1,7 @@
 'use client'
 
 import { CoworkingSpaceCard, coworkingSpaces } from './coworking-space-card'
+import { SuggestionPrompt } from '../suggestions/suggestion-prompt'
 
 export default function HomeFeature() {
   return (
@@ -12,6 +13,7 @@ export default function HomeFeature() {
           <CoworkingSpaceCard key={space.id} space={space} />
         ))}
       </div>
+      <SuggestionPrompt />
     </div>
   )
 }
