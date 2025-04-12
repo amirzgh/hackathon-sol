@@ -1,0 +1,41 @@
+{
+    "workspaces": [
+      {
+        "name": "The Coding Hub",
+        "reviews": [
+          { "wifi_speed": 3, "plugs": 1, "noice": 1, "crowdence": 9 },
+          { "wifi_speed": 2, "plugs": 1, "noice": 2, "crowdence": 7 },
+          { "wifi_speed": 3, "plugs": 1, "noice": 2, "crowdence": 8 },
+          { "wifi_speed": 3, "plugs": 0, "noice": 3, "crowdence": 6 }
+        ]
+      },
+      {
+        "name": "Urban Office",
+        "reviews": [
+          { "wifi_speed": 1, "plugs": 0, "noice": 3, "crowdence": 4 },
+          { "wifi_speed": 2, "plugs": 1, "noice": 2, "crowdence": 6 },
+          { "wifi_speed": 1, "plugs": 0, "noice": 3, "crowdence": 5 },
+          { "wifi_speed": 2, "plugs": 1, "noice": 2, "crowdence": 7 }
+        ]
+      },
+      {
+        "name": "Silent Space",
+        "reviews": [
+          { "wifi_speed": 3, "plugs": 1, "noice": 1, "crowdence": 10 },
+          { "wifi_speed": 3, "plugs": 1, "noice": 1, "crowdence": 9 },
+          { "wifi_speed": 3, "plugs": 1, "noice": 1, "crowdence": 9 },
+          { "wifi_speed": 3, "plugs": 1, "noice": 1, "crowdence": 10 }
+        ]
+      },
+      {
+        "name": "Coffee & Work",
+        "reviews": [
+          { "wifi_speed": 2, "plugs": 1, "noice": 3, "crowdence": 5 },
+          { "wifi_speed": 1, "plugs": 0, "noice": 3, "crowdence": 3 },
+          { "wifi_speed": 1, "plugs": 0, "noice": 3, "crowdence": 4 },
+          { "wifi_speed": 2, "plugs": 1, "noice": 2, "crowdence": 6 }
+        ]
+      }
+    ]
+  }
+  
