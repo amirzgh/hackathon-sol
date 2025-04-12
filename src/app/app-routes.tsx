@@ -16,6 +16,7 @@ const routes: RouteObject[] = [
   { path: '/account/', element: <AccountListFeature /> },
   { path: '/account/:address', element: <AccountDetailFeature /> },
   { path: '/clusters', element: <ClusterFeature /> },
+  {path: '/workspaces', element: <div>hello</div>}
 ]
 
 export function AppRoutes() {
