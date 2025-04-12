@@ -8,27 +8,30 @@ import { MetricsBox } from './metrics-box'
 import { ReviewConfirmationModal } from './review-confirmation-modal'
 import { SubmitComponent } from './submit-component'
 import { showToast } from './toast-notification'
-
-export interface Metrics {
-  wifiSpeed: number | null
-  noiseLevel: number | null
-  crowdedness: number | null
-  socketsAvailable: boolean | null
+import { reviewer_transaction } from '@/functionalities/new'
+import { useUser } from '@/contexts/user-context'
+import { workspaceNames } from '@/data/venues'
+export interface MetricsReview {
+  internet_speed: number | 0
+  noise_level: number | 0
+  crowdedness: number | 0
+  charging_plug_availability: boolean | false
 }
 
 export default function ReviewFeature() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [metrics, setMetrics] = useState<Metrics>({
-    wifiSpeed: null,
-    noiseLevel: null,
-    crowdedness: null,
-    socketsAvailable: null,
+  const [metrics, setMetrics] = useState<MetricsReview>({
+    internet_speed: 0,
+    noise_level: 0,
+    crowdedness: 0,
+    charging_plug_availability: false,
   })
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
+  const { activeUser } = useUser()
   const space = coworkingSpaces.find((s) => s.id === Number(id))
 
   useEffect(() => {
@@ -59,23 +62,39 @@ export default function ReviewFeature() {
     setShowConfirmation(true)
   }
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setSubmitting(true)
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      const workspace_id = parseInt(id ?? '0', 10)
+      const metrics_obj = { venue: workspaceNames[workspace_id], metrics: metrics }
+      const transactionResult = await reviewer_transaction(
+        activeUser.id, // sender
+        workspace_id, // reviewer (space ID)
+        metrics_obj,
+      )
+
+      if (transactionResult.success) {
+        setSubmitted(true)
+      } else {
+        throw new Error(transactionResult.error || 'Transaction failed')
+      }
+    } catch (error) {
+      console.error('Review submission error:', error)
+    } finally {
       setSubmitting(false)
-      setSubmitted(true)
-    }, 1000)
+      setShowConfirmation(false)
+    }
   }
 
-  const handleUpdateMetric = (key: keyof Metrics, value: Metrics[keyof Metrics]) => {
+  const handleUpdateMetric = (key: keyof MetricsReview, value: MetricsReview[keyof MetricsReview]) => {
     setMetrics((prev) => ({
       ...prev,
       [key]: value,
     }))
   }
 
-  const handleResetMetric = (key: keyof Metrics) => {
+  const handleResetMetric = (key: keyof MetricsReview) => {
     setMetrics((prev) => ({
       ...prev,
       [key]: null,

@@ -2,10 +2,10 @@
 
 import { CheckCircle, Loader2, Power, Users, Volume2, Wifi, X } from 'lucide-react'
 import { useEffect, useRef } from 'react'
-import type { Metrics } from './review-feature'
+import type { MetricsReview } from './review-feature'
 
 interface ReviewConfirmationModalProps {
-  metrics: Metrics
+  metrics: MetricsReview
   onClose: () => void
   onConfirm: () => void
   submitting: boolean

@@ -57,6 +57,8 @@ export function SuggestionModal({ onClose }: SuggestionModalProps) {
   const handleSubmit = () => {
     setState('loading')
 
+    // call ai here
+
     // Simulate API call to get suggestion
     setTimeout(() => {
       // For demo purposes, just pick any space

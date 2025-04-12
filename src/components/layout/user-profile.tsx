@@ -2,24 +2,17 @@
 
 import { User } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { useUser } from '@/contexts/user-context'
 
-type UserProfile = {
+export type UserProfile = {
   id: number
   name: string
   initials: string
-  colorFrom: string
-  colorTo: string
 }
 
 export function UserProfileButton() {
   const [showProfile, setShowProfile] = useState(false)
-  const [activeUser, setActiveUser] = useState<UserProfile>({
-    id: 0,
-    name: 'Bill',
-    initials: 'B',
-    colorFrom: '#c62ef8',
-    colorTo: '#21e3b6',
-  })
+  const { activeUser, setActiveUser } = useUser()
   const profileRef = useRef<HTMLDivElement>(null)
 
   const users: UserProfile[] = [
@@ -27,29 +20,21 @@ export function UserProfileButton() {
       id: 0,
       name: 'Bill',
       initials: 'B',
-      colorFrom: '#c62ef8',
-      colorTo: '#21e3b6',
     },
     {
       id: 1,
       name: 'Nick',
       initials: 'N',
-      colorFrom: '#818dd3',
-      colorTo: '#5eadc8',
     },
     {
       id: 2,
       name: 'Cap',
       initials: 'C',
-      colorFrom: '#21e3b6',
-      colorTo: '#c62ef8',
     },
     {
       id: 3,
       name: 'EncodeBot',
       initials: 'E',
-      colorFrom: '#5eadc8',
-      colorTo: '#818dd3',
     },
   ]
 
@@ -89,7 +74,7 @@ export function UserProfileButton() {
                 <div
                   className="w-10 rounded-full"
                   style={{
-                    background: `linear-gradient(to right, ${activeUser.colorFrom}, ${activeUser.colorTo})`,
+                    background: `linear-gradient(to right, #c62ef8, #21e3b6)`,
                   }}
                 >
                   <span className="text-sm text-white font-bold flex items-center justify-center h-full">
@@ -118,7 +103,7 @@ export function UserProfileButton() {
                       <div
                         className="w-8 rounded-full"
                         style={{
-                          background: `linear-gradient(to right, ${user.colorFrom}, ${user.colorTo})`,
+                          background: `linear-gradient(to right, #818dd3, #21e3b6)`,
                         }}
                       >
                         <span className="text-xs text-white font-bold flex items-center justify-center h-full">

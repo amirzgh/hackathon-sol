@@ -1,15 +1,15 @@
 'use client'
 
 import { HelpCircle, Wifi, Volume2, Users, Power, X } from 'lucide-react'
-import type { Metrics } from './review-feature'
+import type { MetricsReview } from './review-feature'
 
-interface MetricsBoxProps {
-  metrics: Metrics
-  onUpdateMetric: <K extends keyof Metrics>(key: K, value: Metrics[K]) => void
-  onResetMetric: (key: keyof Metrics) => void
+interface MetricsReviewBoxProps {
+  metrics: MetricsReview
+  onUpdateMetric: <K extends keyof MetricsReview>(key: K, value: MetricsReview[K]) => void
+  onResetMetric: (key: keyof MetricsReview) => void
 }
 
-export function MetricsBox({ metrics, onUpdateMetric, onResetMetric }: MetricsBoxProps) {
+export function MetricsBox({ metrics, onUpdateMetric, onResetMetric }: MetricsReviewBoxProps) {
   return (
     <div className="space-y-6">
       {/* WiFi Speed */}

@@ -16,7 +16,7 @@ export function SubmitComponent({ onSubmit, hasMetrics }: SubmitComponentProps) 
       <div className="flex items-center justify-center gap-2 text-center">
         <Coins className="h-5 w-5 text-yellow-500" />
         <p className="text-sm">
-          {hasMetrics ? 'You will receive 0.05 SOL for your review' : 'Add at least one metric to receive SOL rewards'}
+          {hasMetrics ? 'You will receive 0.01 SOL for your review' : 'Add at least one metric to receive SOL rewards'}
         </p>
       </div>
 
