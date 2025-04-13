@@ -15,8 +15,7 @@ https://github.com/user-attachments/assets/8d8f5323-bb4e-44ab-93f6-1f4dfa944b10
 ### 1. Submit Reviews & Earn SOL
 
 Users visit coworking spaces and submit reviews based on predefined metrics like noise level, internet speed, and charging socket availability.
-Each review is recorded as a unique Solana transaction, with the review details stored in the transaction memo.
-For this proof of concept, rewards are distributed to a hard-coded wallet address within the application. In a future version, we plan to integrate Phantom wallet support for seamless, user-owned transactions.
+Each review is recorded as a unique Solana transaction, with the review details stored in the transaction memo. Upon submission, the user is immediately rewarded with a fixed amount of SOL via their Phantom wallet.
 
 ### 2. AI-Powered Workspace Recommendations
 
@@ -63,9 +62,6 @@ In return, businesses gain increased visibility through reviews and foot traffic
 
 ## Usage
 
-
-
-
 **Landing page**:
 
 ![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/landing_screen.jpg "Landing page")
@@ -78,17 +74,18 @@ In return, businesses gain increased visibility through reviews and foot traffic
 
 Connection to Phantom wallet is revealed when user clicks on wallet icon.
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/connect_phantom.jpg "Connect phantom")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/connect_phantom.jpg" alt="Connect phantom" width="300"/>
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/view_phantom_wallet.jpg "Wallet view")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/view_phantom_wallet.jpg" alt="Wallet view" width="300"/>
+
 
 **User input for workspace recommendation**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/recommendation_system_inpt.jpg "Input for rec system")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/recommendation_system_inpt.jpg" alt="Input for rec system" width="400"/>
 
 **User interface for rating workspace**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/rate_workspace.jpg "UI rating")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/rate_workspace.jpg" alt="UI rating" width="400"/>
 
 ## Roadmap
 ### Technical
