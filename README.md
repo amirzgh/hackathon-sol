@@ -54,7 +54,7 @@ In return, businesses gain increased visibility through reviews and foot traffic
    npm install
    ```
 3. Run the server
-  ```sh
+   ```sh
    npm run dev
    ```
 
