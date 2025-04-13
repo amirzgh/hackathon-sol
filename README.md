@@ -1,5 +1,3 @@
-> TODO: mention phantom wallet integration
-
 # Cowork-Net
 - **Event**: [Encode AI London 2025](https://lu.ma/AI-London-2025)
 - **Bounty**: [Superteam UK](https://bento.me/superteamuk): Build an AI x blockchain solution
@@ -29,44 +27,36 @@ Users who take up a recommendation and submit a review for it also receive a SOL
 Businesses fund these incentives by purchasing SOL, which is then distributed to users through the app.
 In return, businesses gain increased visibility through reviews and foot traffic driven by recommendations.
 
-## Tech Highlights
-
-**Solana blockchain**: Used to record review data via transaction memos and distribute SOL rewards.
-
-**DeepSeek LLM**: Powers the AI recommender system by analyzing aggregated blockchain review data and matching it with user preferences.
-
 ## Built With
+### Tech stack
 * [![Next][Next.js]][Next-url]
 * [![TypeScript][TypeScript]][TypeScript-url]
 * [![Vite][Vite]][Vite-url]
 * [![Tailwind][Tailwind]][Tailwind-url]
 * [![SolanaWeb3][SolanaWeb3]][SolanaWeb3-url]
 * [![QuickNode][QuickNode]][QuickNode-url]
-* [![DeepSeek][DeepSeek]][DeepSeek-url]
 
+### Integrations
+* **Solana Blockchain** — for storing coworking space reviews and handling SOL reward transactions.
+
+* **Phantom Wallet** — for secure wallet connections, SOL transfers, and transaction signing.
+
+* **DeepSeek LLM API** — for AI-powered coworking space recommendations based on user preferences and on-chain data.
 
 ## Getting started
-> insert instructions for running it locally
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
 
 1. Clone the repo
    ```sh
-   git clone git@github.com:amirzgh/hackathon-sol.git
+   git clone https://github.com/amirzgh/hackathon-sol.git
    ```
 2. Install NPM packages
    ```sh
    npm install
    ```
-3. More steps
+3. Run the server
+  ```sh
+   npm run dev
+   ```
 
 
 ## Usage
@@ -75,11 +65,15 @@ This is an example of how to list things you need to use the software and how to
 
 
 ## Roadmap
+### Technical
 - [ ] Automate reviews for noise level, internet speed and more by using phone sensors and storing data on-chain
 - [ ] Business-side dashboard for wallet and user management
 - [ ] Support time-based data for user reviews
 - [ ] Abuse prevention mechanisms for reviews and verification of venue visit
 - [ ] Implement weighted bias for more recent reviews, number of reviews and maybe user reliability
+
+### Business
+- [ ] Expand the idea to other sectors (e.g. cafés, libraries, etc.)
 
 
 
@@ -96,7 +90,7 @@ This is an example of how to list things you need to use the software and how to
 [Tailwind]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [Tailwind-url]: https://tailwindcss.com/
 
-[QuickNode]: https://img.shields.io/badge/QuickNode-26C281?style=for-the-badge&logo=quicknode&logoColor=white
+[QuickNode]: https://img.shields.io/badge/QuickNode-563D7C?style=for-the-badge&logo=https://avatars.githubusercontent.com/u/53955811?s=200&v=4&logoColor=white
 [QuickNode-url]: https://www.quicknode.com/
 
 [DeepSeek]: https://img.shields.io/badge/DeepSeek-4B0082?style=for-the-badge&logo=quicknode&logoColor=white
