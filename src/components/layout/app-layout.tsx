@@ -17,10 +17,7 @@ interface AppLayoutProps {
 export function AppLayout({ children }: AppLayoutProps) {
   const network = WalletAdapterNetwork.Devnet // currently using
   const endpoint = useMemo(() => clusterApiUrl(network), [network])
-  const wallets = useMemo(
-    () => [new PhantomWalletAdapter()],
-    [network]
-  )
+  const wallets = useMemo(() => [new PhantomWalletAdapter()], [network])
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
@@ -31,7 +28,9 @@ export function AppLayout({ children }: AppLayoutProps) {
                 <div className="container mx-auto">
                   <div className="flex-1">
                     <a href="/" className="btn btn-ghost normal-case text-xl">
-                      Cowork-Net
+                      <span className="bg-gradient-to-r from-[#c62ef8] to-[#21e3b6] bg-clip-text text-transparent">
+                        Cowork-Net
+                      </span>
                     </a>
                   </div>
                   <div className="flex-none gap-2">

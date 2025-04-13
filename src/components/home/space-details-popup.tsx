@@ -3,6 +3,8 @@
 import { X } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import type { CoworkingSpace } from './coworking-space-card'
+import photo1 from '@/graphics/photo_1a.jpg'
+import photo2 from '@/graphics/photo_1b.jpg'
 
 interface SpaceDetailsPopupProps {
   space: CoworkingSpace
@@ -37,6 +39,16 @@ export function SpaceDetailsPopup({ space, onClose, onReview }: SpaceDetailsPopu
           <button onClick={onClose} className="btn btn-ghost btn-circle">
             <X className="h-6 w-6" />
           </button>
+        </div>
+
+        {/* Photo Gallery - Two square images side by side */}
+        <div className="flex gap-2 mb-4">
+          <div className="w-1/2 aspect-square rounded-lg overflow-hidden">
+            <img src={photo1} alt={`${space.name} - Photo 1`} className="w-full h-full object-cover" />
+          </div>
+          <div className="w-1/2 aspect-square rounded-lg overflow-hidden">
+            <img src={photo2} alt={`${space.name} - Photo 2`} className="w-full h-full object-cover" />
+          </div>
         </div>
 
         <div className="divider"></div>
