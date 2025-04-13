@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { ThemeToggle } from './theme-toggle'
 import { UserProfileButton } from './user-profile'
 import { UserProvider } from '@/contexts/user-context'
+import { ConnectWallet } from './connect-wallet'
 
 interface AppLayoutProps {
   children: ReactNode
@@ -20,9 +21,10 @@ export function AppLayout({ children }: AppLayoutProps) {
                 Cowork-Net
               </a>
             </div>
-            <div className="flex-none gap-2">
+            <div className="flex gap-2">
               <ThemeToggle />
               <UserProfileButton />
+              <ConnectWallet />
             </div>
           </div>
         </header>
