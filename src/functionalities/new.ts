@@ -1,5 +1,6 @@
 import { Metrics } from '@/types/metrics'
 import * as web3 from '@solana/web3.js'
+import { PublicKey } from '@solana/web3.js'
 
 import { REVIEWER_AMOUNT } from '../data/constants'
 
@@ -46,10 +47,11 @@ const connection = new web3.Connection(
 // const message = "This is a memo"; // Define your memo message here
 
 async function reviewer_transaction(
+  reviewer: PublicKey,
   sender: number,
-  reviewer: number,
   metrics?: Metrics,
-  amount: number = REVIEWER_AMOUNT): Promise<{ success: boolean; signature?: string; error?: string }> {
+  amount: number = REVIEWER_AMOUNT,
+): Promise<{ success: boolean; signature?: string; error?: string }> {
   try {
     const secretKey = Uint8Array.from(WORKSPACES[sender])
     const senderKeypair = web3.Keypair.fromSecretKey(secretKey)
@@ -61,11 +63,11 @@ async function reviewer_transaction(
     }
 
     // Validate reviewer exists
-    if (!REVIEWERS[reviewer]) {
+    if (!reviewer) {
       throw new Error(`Reviewer ${reviewer} not found`)
     }
 
-    const receiverPubKey = new web3.PublicKey(REVIEWERS[reviewer])
+    const receiverPubKey = new web3.PublicKey(reviewer)
     const message = JSON.stringify(metrics)
 
     const transaction = new web3.Transaction()

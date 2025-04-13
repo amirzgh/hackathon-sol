@@ -7,15 +7,15 @@ import { coworkingSpaces } from '../home/coworking-space-card'
 import { MetricsBox } from './metrics-box'
 import { ReviewConfirmationModal } from './review-confirmation-modal'
 import { SubmitComponent } from './submit-component'
-import { showToast } from './toast-notification'
 import { reviewer_transaction } from '@/functionalities/new'
 import { useUser } from '@/contexts/user-context'
 import { workspaceNames } from '@/data/venues'
+
 export interface MetricsReview {
-  internet_speed: number | 0
-  noise_level: number | 0
-  crowdedness: number | 0
-  charging_plug_availability: boolean | false
+  internet_speed: number
+  noise_level: number
+  crowdedness: number
+  charging_plug_availability: boolean
 }
 
 export default function ReviewFeature() {
@@ -31,16 +31,14 @@ export default function ReviewFeature() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  const { activeUser } = useUser()
+  const { walletPublicKey } = useUser()
   const space = coworkingSpaces.find((s) => s.id === Number(id))
 
   useEffect(() => {
     if (submitted) {
       const timer = setTimeout(() => {
         navigate('/')
-        // Show toast after navigation
         setTimeout(() => {
-          showToast()
         }, 500)
       }, 1500)
       return () => clearTimeout(timer)
@@ -59,19 +57,34 @@ export default function ReviewFeature() {
   }
 
   const handleSubmit = () => {
+    if (!walletPublicKey) {
+      return
+    }
     setShowConfirmation(true)
   }
 
   const handleConfirm = async () => {
+    if (!walletPublicKey) return
+
     setSubmitting(true)
 
     try {
-      const workspace_id = parseInt(id ?? '0', 10)
-      const metrics_obj = { venue: workspaceNames[workspace_id], metrics: metrics }
+      const workspaceId = parseInt(id ?? '0', 10)
+      const metricsData = {
+        venue: workspaceNames[workspaceId],
+        metrics: {
+          ...metrics,
+          // Ensure values are within expected ranges
+          internet_speed: Math.max(0, Math.min(10, metrics.internet_speed)),
+          noise_level: Math.max(0, Math.min(10, metrics.noise_level)),
+          crowdedness: Math.max(0, Math.min(10, metrics.crowdedness)),
+        },
+      }
+
       const transactionResult = await reviewer_transaction(
-        activeUser.id, // sender
-        workspace_id, // reviewer (space ID)
-        metrics_obj,
+        walletPublicKey, // Use wallet public key instead of user ID
+        workspaceId,
+        metricsData,
       )
 
       if (transactionResult.success) {
@@ -87,7 +100,7 @@ export default function ReviewFeature() {
     }
   }
 
-  const handleUpdateMetric = (key: keyof MetricsReview, value: MetricsReview[keyof MetricsReview]) => {
+  const handleUpdateMetric = (key: keyof MetricsReview, value: number | boolean) => {
     setMetrics((prev) => ({
       ...prev,
       [key]: value,
@@ -95,11 +108,14 @@ export default function ReviewFeature() {
   }
 
   const handleResetMetric = (key: keyof MetricsReview) => {
+    const defaultValue = key === 'charging_plug_availability' ? false : 0
     setMetrics((prev) => ({
       ...prev,
-      [key]: null,
+      [key]: defaultValue,
     }))
   }
+
+  const hasValidMetrics = Object.values(metrics).some((v) => v !== (typeof v === 'boolean' ? false : 0))
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl animate-fadeIn">
@@ -123,7 +139,7 @@ export default function ReviewFeature() {
 
           <div className="divider"></div>
 
-          <SubmitComponent onSubmit={handleSubmit} hasMetrics={Object.values(metrics).some((v) => v !== null)} />
+          <SubmitComponent onSubmit={handleSubmit} hasMetrics={hasValidMetrics} walletConnected={!!walletPublicKey} />
         </div>
       </div>
 

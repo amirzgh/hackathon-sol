@@ -1,15 +1,30 @@
 'use client'
 
-import { Coins } from 'lucide-react'
+import { Coins, Wallet } from 'lucide-react'
 
 interface SubmitComponentProps {
   onSubmit: () => void
   hasMetrics: boolean
+  walletConnected: boolean
 }
 
-export function SubmitComponent({ onSubmit, hasMetrics }: SubmitComponentProps) {
-  // Calculate reward based on metrics provided or will we hardcode it eh?
-  //   const solReward = hasMetrics ? 0.05 : 0;
+export function SubmitComponent({ onSubmit, hasMetrics, walletConnected }: SubmitComponentProps) {
+  if (!walletConnected) {
+    return (
+      <div className="space-y-4">
+        <div className="alert alert-warning">
+          <Wallet className="h-5 w-5" />
+          <span>Connect your wallet to submit a review</span>
+        </div>
+        <button
+          disabled
+          className="btn btn-primary w-full bg-gradient-to-r from-[#c62ef8] to-[#21e3b6] border-none opacity-50"
+        >
+          Submit Review
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-4">
