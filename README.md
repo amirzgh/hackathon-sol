@@ -1,12 +1,12 @@
 > TODO: mention phantom wallet integration
 
-# Cowork Connect
+# Cowork-Net
 - **Event**: [Encode AI London 2025](https://lu.ma/AI-London-2025)
 - **Bounty**: [Superteam UK](https://bento.me/superteamuk): Build an AI x blockchain solution
 - **Authors**: [Polina](https://github.com/L1N-z), [Amir](https://github.com/amirzgh), [Farzaan](https://github.com/farzaanshaikh), [Loïc](https://github.com/PeronLo)
 
 
-**Cowork Connect** is a decentralized incentive and recommendation system for coworking spaces, powered by Solana and AI.
+**Cowork-Net** is a decentralized incentive and recommendation system for coworking spaces, powered by Solana and AI.
 
 The platform allows users to discover and review coworking spaces, earning SOL tokens as a reward for contributing reviews and following personalized recommendations.
 
