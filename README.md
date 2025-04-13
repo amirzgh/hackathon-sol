@@ -8,6 +8,8 @@
 
 The platform allows users to discover and review coworking spaces, earning SOL tokens as a reward for contributing reviews and following personalized recommendations.
 
+https://github.com/user-attachments/assets/8d8f5323-bb4e-44ab-93f6-1f4dfa944b10
+
 ## How It Works
 
 ### 1. Submit Reviews & Earn SOL
