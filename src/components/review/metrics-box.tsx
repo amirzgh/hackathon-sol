@@ -27,8 +27,8 @@ export function MetricsBox({ metrics, onUpdateMetric, onResetMetric }: MetricsRe
               </div>
             </div>
           </div>
-          {metrics.wifiSpeed !== null && (
-            <button onClick={() => onResetMetric('wifiSpeed')} className="btn btn-ghost btn-xs">
+          {metrics.internet_speed !== null && (
+            <button onClick={() => onResetMetric('internet_speed')} className="btn btn-ghost btn-xs">
               <X className="h-4 w-4" />
             </button>
           )}
@@ -37,8 +37,8 @@ export function MetricsBox({ metrics, onUpdateMetric, onResetMetric }: MetricsRe
           type="range"
           min="0"
           max="10"
-          value={metrics.wifiSpeed || 3}
-          onChange={(e) => onUpdateMetric('wifiSpeed', Number.parseInt(e.target.value))}
+          value={metrics.internet_speed || 3}
+          onChange={(e) => onUpdateMetric('internet_speed', Number.parseInt(e.target.value))}
           className="range range-primary range-sm"
           step="0"
         />
@@ -63,8 +63,8 @@ export function MetricsBox({ metrics, onUpdateMetric, onResetMetric }: MetricsRe
               </div>
             </div>
           </div>
-          {metrics.noiseLevel !== null && (
-            <button onClick={() => onResetMetric('noiseLevel')} className="btn btn-ghost btn-xs">
+          {metrics.noise_level !== null && (
+            <button onClick={() => onResetMetric('noise_level')} className="btn btn-ghost btn-xs">
               <X className="h-4 w-4" />
             </button>
           )}
@@ -73,8 +73,8 @@ export function MetricsBox({ metrics, onUpdateMetric, onResetMetric }: MetricsRe
           type="range"
           min="0"
           max="10"
-          value={metrics.noiseLevel || 0}
-          onChange={(e) => onUpdateMetric('noiseLevel', Number.parseInt(e.target.value))}
+          value={metrics.noise_level || 0}
+          onChange={(e) => onUpdateMetric('noise_level', Number.parseInt(e.target.value))}
           className="range range-primary range-sm"
           step="0"
         />
@@ -131,22 +131,22 @@ export function MetricsBox({ metrics, onUpdateMetric, onResetMetric }: MetricsRe
               </div>
             </div>
           </div>
-          {metrics.socketsAvailable !== null && (
-            <button onClick={() => onResetMetric('socketsAvailable')} className="btn btn-ghost btn-xs">
+          {metrics.charging_plug_availability !== null && (
+            <button onClick={() => onResetMetric('charging_plug_availability')} className="btn btn-ghost btn-xs">
               <X className="h-4 w-4" />
             </button>
           )}
         </div>
         <div className="flex gap-4">
           <button
-            className={`btn flex-1 ${metrics.socketsAvailable === true ? 'btn-primary' : 'btn-outline'}`}
-            onClick={() => onUpdateMetric('socketsAvailable', true)}
+            className={`btn flex-1 ${metrics.charging_plug_availability === true ? 'btn-primary' : 'btn-outline'}`}
+            onClick={() => onUpdateMetric('charging_plug_availability', true)}
           >
             Yes
           </button>
           <button
-            className={`btn flex-1 ${metrics.socketsAvailable === false ? 'btn-primary' : 'btn-outline'}`}
-            onClick={() => onUpdateMetric('socketsAvailable', false)}
+            className={`btn flex-1 ${metrics.charging_plug_availability === false ? 'btn-primary' : 'btn-outline'}`}
+            onClick={() => onUpdateMetric('charging_plug_availability', false)}
           >
             No
           </button>

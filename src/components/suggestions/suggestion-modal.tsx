@@ -4,6 +4,7 @@ import { Coffee, Loader2, Users, Volume, Wifi, X, Zap } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { coworkingSpaces } from '../home/coworking-space-card'
+import { askAI } from '@/hooks/use-workspace-recommendation'
 
 interface SuggestionModalProps {
   onClose: () => void
@@ -54,20 +55,41 @@ export function SuggestionModal({ onClose }: SuggestionModalProps) {
     }))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setState('loading')
 
-    // call ai here
+    try {
+      // Call askAI with the converted metrics
+      const aiResult = await askAI(
+        preferences.description, // user_request
+        [
+          preferences.powerPlugs ? 'charging_plugs' : '',
+          preferences.quietSpace ? 'silent' : '',
+          preferences.fastWifi ? 'high_internet_speed' : '',
+          preferences.largeGroup ? 'low_crowdedness' : '',
+        ].filter(Boolean), // requirements (filter out empty strings)
+      )
 
-    // Simulate API call to get suggestion
-    setTimeout(() => {
-      // For demo purposes, just pick any space
-      // In a real app, this would be a more sophisticated algorithm
-      const spaceId = 0;
+      // If AI returned a result, use it to find the space
+      if (aiResult && aiResult.venue) {
+        const space = coworkingSpaces.find((s) => s.name === aiResult.venue) || coworkingSpaces[0]
+        setSuggestedSpace(space)
+        setState('result')
+      } else {
+        // Fallback to default selection if AI didn't return a valid result
+        const spaceId = 0
+        const space = coworkingSpaces.find((s) => s.id === spaceId) || coworkingSpaces[0]
+        setSuggestedSpace(space)
+        setState('result')
+      }
+    } catch (error) {
+      console.error('AI recommendation failed:', error)
+      // Fallback to default selection on error
+      const spaceId = 0
       const space = coworkingSpaces.find((s) => s.id === spaceId) || coworkingSpaces[0]
       setSuggestedSpace(space)
       setState('result')
-    }, 1500)
+    }
   }
 
   const handleAccept = () => {

@@ -74,7 +74,7 @@ export function ReviewConfirmationModal({
                 <Wifi className="h-5 w-5 text-primary" />
                 <div>
                   <p className="font-medium">WiFi Speed</p>
-                  <p className="text-sm opacity-70">{getWifiSpeedText(metrics.wifiSpeed)}</p>
+                  <p className="text-sm opacity-70">{getWifiSpeedText(metrics.internet_speed)}</p>
                 </div>
               </div>
 
@@ -82,7 +82,7 @@ export function ReviewConfirmationModal({
                 <Volume2 className="h-5 w-5 text-primary" />
                 <div>
                   <p className="font-medium">Noise Level</p>
-                  <p className="text-sm opacity-70">{getNoiseLevelText(metrics.noiseLevel)}</p>
+                  <p className="text-sm opacity-70">{getNoiseLevelText(metrics.noise_level)}</p>
                 </div>
               </div>
 
@@ -101,7 +101,11 @@ export function ReviewConfirmationModal({
                 <div>
                   <p className="font-medium">Sockets/Plugs Available</p>
                   <p className="text-sm opacity-70">
-                    {metrics.socketsAvailable !== null ? (metrics.socketsAvailable ? 'Yes' : 'No') : 'Not provided'}
+                    {metrics.charging_plug_availability !== null
+                      ? metrics.charging_plug_availability
+                        ? 'Yes'
+                        : 'No'
+                      : 'Not provided'}
                   </p>
                 </div>
               </div>

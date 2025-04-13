@@ -30,7 +30,8 @@ const WORKSPACES = [
   ]),
 ]
 
-const REVIEWERS = ['89UwaxCqWu6r9TUyJA27sSHHK2MZ8cMSQWPu228Lkh2z',
+const REVIEWERS = [
+  '89UwaxCqWu6r9TUyJA27sSHHK2MZ8cMSQWPu228Lkh2z',
   'fEaMmKr3ukF1zsmBNuXYUmisE9x8CGX5rMCmEcmGLSt',
   'WSR85yUjhFuyDvGpg5CADqy4rKEnNFasYweMQSYge1a',
 ]
@@ -48,24 +49,24 @@ async function reviewer_transaction(
   metrics: Metrics,
 ): Promise<{ success: boolean; signature?: string; error?: string }> {
   try {
-    const secretKey = Uint8Array.from(WORKSPACES[sender]);
-    const senderKeypair = web3.Keypair.fromSecretKey(secretKey);
-    const senderPubKey = senderKeypair.publicKey;
+    const secretKey = Uint8Array.from(WORKSPACES[sender])
+    const senderKeypair = web3.Keypair.fromSecretKey(secretKey)
+    const senderPubKey = senderKeypair.publicKey
 
     // Validate sender exists
     if (!WORKSPACES[sender]) {
-      throw new Error(`Sender workspace ${sender} not found`);
+      throw new Error(`Sender workspace ${sender} not found`)
     }
 
     // Validate reviewer exists
     if (!REVIEWERS[reviewer]) {
-      throw new Error(`Reviewer ${reviewer} not found`);
+      throw new Error(`Reviewer ${reviewer} not found`)
     }
 
-    const receiverPubKey = new web3.PublicKey(REVIEWERS[reviewer]);
-    const message = JSON.stringify(metrics);
+    const receiverPubKey = new web3.PublicKey(REVIEWERS[reviewer])
+    const message = JSON.stringify(metrics)
 
-    const transaction = new web3.Transaction();
+    const transaction = new web3.Transaction()
 
     // 1. Add transfer instruction
     transaction.add(
@@ -74,7 +75,7 @@ async function reviewer_transaction(
         toPubkey: receiverPubKey,
         lamports: web3.LAMPORTS_PER_SOL * 0.000000001, // 0.01 SOL
       }),
-    );
+    )
 
     // 2. Add memo instruction
     transaction.add(
@@ -83,53 +84,118 @@ async function reviewer_transaction(
         data: Buffer.from(message, 'utf-8'),
         programId: new web3.PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr'),
       }),
-    );
+    )
 
     // Send transaction
-    const signature = await web3.sendAndConfirmTransaction(connection, transaction, [senderKeypair]);
+    const signature = await web3.sendAndConfirmTransaction(connection, transaction, [senderKeypair])
 
-    console.log(`Transaction successful! Signature: ${signature}`);
-    return { success: true, signature };
+    console.log(`Transaction successful! Signature: ${signature}`)
+    return { success: true, signature }
   } catch (error) {
-    console.error('Transaction failed:', error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Unknown transaction error'
-    };
+    console.error('Transaction failed:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown transaction error',
+    }
   }
 }
 
-function getReviews(workspace: number) {
+async function getAllReviews() {
+  const allReviews: Record<number, Metrics[]> = {}
+
+  for (let i = 0; i < 5; i++) {
+    // Loop through all 5 venues (0-4)
+    try {
+      const reviews = await getReviews(i)
+      allReviews[i] = reviews
+      console.log(`Fetched ${reviews.length} reviews for venue ${i}`)
+    } catch (error) {
+      console.error(`Error fetching reviews for venue ${i}:`, error)
+      allReviews[i] = [] // Store empty array if there's an error
+    }
+  }
+
+  // Convert to JSON and save to file (Node.js environment)
+  const jsonContent = JSON.stringify(allReviews, null, 2)
+
+  // In a browser environment, you would download it like this:
+  const blob = new Blob([jsonContent], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'venue_metrics.json'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+
+  return allReviews
+}
+
+// Modified getReviews function to properly return Promise
+async function getReviews(workspace: number): Promise<Metrics[]> {
   const secretKey = Uint8Array.from(WORKSPACES[workspace])
   const senderKeypair = web3.Keypair.fromSecretKey(secretKey)
   const senderPubKey = senderKeypair.publicKey
 
-  ;(async () => {
-    const solana = new web3.Connection(
-      'https://withered-skilled-bush.solana-devnet.quiknode.pro/fde767e761a49b21b8fbd6d572b879ceff398b7d/',
-    )
-    const publicKey = new web3.PublicKey(senderPubKey)
-    const response = await solana.getSignaturesForAddress(publicKey, { limit: 5 })
+  const solana = new web3.Connection(
+    'https://withered-skilled-bush.solana-devnet.quiknode.pro/fde767e761a49b21b8fbd6d572b879ceff398b7d/',
+  )
 
-    const memos = response
-      .map((signatureInfo) => {
-        if (signatureInfo.memo) {
-          const raw = signatureInfo.memo.trim()
-          const jsonString = raw.replace(/^\[\d+\]\s*/, '')
+  const publicKey = new web3.PublicKey(senderPubKey)
+  const response = await solana.getSignaturesForAddress(publicKey, { limit: 5 })
 
-          try {
-            const metrics: Metrics = JSON.parse(jsonString)
-            return metrics
-          } catch (err) {
-            // Not a valid JSON, ignore
-            console.log(err)
-          }
+  const memos = response
+    .map((signatureInfo) => {
+      if (signatureInfo.memo) {
+        const raw = signatureInfo.memo.trim()
+        const jsonString = raw.replace(/^\[\d+\]\s*/, '')
+
+        try {
+          return JSON.parse(jsonString) as Metrics
+        } catch (err) {
+          console.error(`Error parsing memo for venue ${workspace}:`, err)
+          return null
         }
-      })
-      .filter((m): m is Metrics => m !== undefined)
+      }
+      return null
+    })
+    .filter((m): m is Metrics => m !== null)
 
-    return memos
-  })()
+  return memos
 }
 
-export { reviewer_transaction, getReviews }
+// function getReviews(workspace: number) {
+//   const secretKey = Uint8Array.from(WORKSPACES[workspace])
+//   const senderKeypair = web3.Keypair.fromSecretKey(secretKey)
+//   const senderPubKey = senderKeypair.publicKey
+
+//   ;(async () => {
+//     const solana = new web3.Connection(
+//       'https://withered-skilled-bush.solana-devnet.quiknode.pro/fde767e761a49b21b8fbd6d572b879ceff398b7d/',
+//     )
+//     const publicKey = new web3.PublicKey(senderPubKey)
+//     const response = await solana.getSignaturesForAddress(publicKey, { limit: 5 })
+
+//     const memos = response
+//       .map((signatureInfo) => {
+//         if (signatureInfo.memo) {
+//           const raw = signatureInfo.memo.trim()
+//           const jsonString = raw.replace(/^\[\d+\]\s*/, '')
+
+//           try {
+//             const metrics: Metrics = JSON.parse(jsonString)
+//             return metrics
+//           } catch (err) {
+//             // Not a valid JSON, ignore
+//             console.log(err)
+//           }
+//         }
+//       })
+//       .filter((m): m is Metrics => m !== undefined)
+
+//     return memos
+//   })()
+// }
+
+export { reviewer_transaction, getAllReviews }
