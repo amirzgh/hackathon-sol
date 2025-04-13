@@ -21,6 +21,17 @@ interface Preferences {
   description: string
 }
 
+function hammingDistance(a: string, b: string): number {
+  const len = Math.max(a.length, b.length)
+  let dist = 0
+
+  for (let i = 0; i < len; i++) {
+    if (a[i] !== b[i]) dist++
+  }
+
+  return dist
+}
+
 export function SuggestionModal({ onClose }: SuggestionModalProps) {
   const [state, setState] = useState<SuggestionState>('input')
   const [preferences, setPreferences] = useState<Preferences>({
@@ -32,6 +43,7 @@ export function SuggestionModal({ onClose }: SuggestionModalProps) {
     description: '',
   })
   const [suggestedSpace, setSuggestedSpace] = useState<(typeof coworkingSpaces)[0] | null>(null)
+  const [reasoning, setReasoning] = useState<string | null>(null)
   const modalRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
 
@@ -60,7 +72,7 @@ export function SuggestionModal({ onClose }: SuggestionModalProps) {
 
     try {
       // Call askAI with the converted metrics
-      const aiResult = await askAI(
+      const aiResultStr = await askAI(
         preferences.description, // user_request
         [
           preferences.powerPlugs ? 'charging_plugs' : '',
@@ -69,17 +81,28 @@ export function SuggestionModal({ onClose }: SuggestionModalProps) {
           preferences.largeGroup ? 'low_crowdedness' : '',
         ].filter(Boolean), // requirements (filter out empty strings)
       )
+      const aiResult = JSON.parse(aiResultStr)
 
       // If AI returned a result, use it to find the space
       if (aiResult && aiResult.venue) {
-        const space = coworkingSpaces.find((s) => s.name === aiResult.venue) || coworkingSpaces[0]
+        const target = aiResult.venue.toLowerCase().trim()
+
+        const space =
+          coworkingSpaces.reduce((closest, current) => {
+            const currentDistance = hammingDistance(current.name.toLowerCase().trim(), target)
+            const closestDistance = hammingDistance(closest.name.toLowerCase().trim(), target)
+            return currentDistance < closestDistance ? current : closest
+          }, coworkingSpaces[0]) || coworkingSpaces[0]
+        // const space = coworkingSpaces.find((s) => s.name === aiResult.venue) || coworkingSpaces[0]
         setSuggestedSpace(space)
+        setReasoning(aiResult.reasoning || null)
         setState('result')
       } else {
         // Fallback to default selection if AI didn't return a valid result
         const spaceId = 0
         const space = coworkingSpaces.find((s) => s.id === spaceId) || coworkingSpaces[0]
         setSuggestedSpace(space)
+        setReasoning(aiResult.reasoning || null)
         setState('result')
       }
     } catch (error) {
@@ -88,6 +111,7 @@ export function SuggestionModal({ onClose }: SuggestionModalProps) {
       const spaceId = 0
       const space = coworkingSpaces.find((s) => s.id === spaceId) || coworkingSpaces[0]
       setSuggestedSpace(space)
+      setReasoning(null)
       setState('result')
     }
   }
