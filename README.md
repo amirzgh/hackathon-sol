@@ -6,7 +6,7 @@
 - **Authors**: [Polina](https://github.com/L1N-z), [Amir](https://github.com/amirzgh), [Farzaan](https://github.com/farzaanshaikh), [Loïc](https://github.com/PeronLo)
 
 
-**Cowork-Net** is a decentralized incentive and recommendation system for coworking spaces, powered by Solana and AI.
+**Cowork-Net** is a blockchain-powered incentive and recommendation system for coworking spaces, powered by Solana and AI.
 
 The platform allows users to discover and review coworking spaces, earning SOL tokens as a reward for contributing reviews and following personalized recommendations.
 
