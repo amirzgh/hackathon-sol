@@ -60,9 +60,33 @@ In return, businesses gain increased visibility through reviews and foot traffic
 
 
 ## Usage
-> insert images and text explanation
-> optional: insert demo video (max 3 min) demonstrating functionalities
 
+
+
+
+**Landing page**:
+
+![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/landing_screen.jpg "Landing page")
+
+**Workspace card**:
+
+![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/view_workspace_metrics.jpg "Workspace card")
+
+**Phantom wallet**:
+
+Connection to Phantom wallet is revealed when user clicks on wallet icon.
+
+![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/connect_phantom.jpg "Connect phantom")
+
+![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/view_phantom_wallet.jpg "Wallet view")
+
+**User input for workspace recommendation**:
+
+![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/recommendation_system_inpt.jpg "Input for rec system")
+
+**User interface for rating workspace**:
+
+![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/rate_workspace.jpg "UI rating")
 
 ## Roadmap
 ### Technical
