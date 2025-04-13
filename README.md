@@ -84,11 +84,11 @@ Connection to Phantom wallet is revealed when user clicks on wallet icon.
 
 **User input for workspace recommendation**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/recommendation_system_inpt.jpg "Input for rec system")
+![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/recommendation_system_inpt.jpg "Input for rec system")
 
 **User interface for rating workspace**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/rate_workspace.jpg "UI rating")
+![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/rate_workspace.jpg "UI rating")
 
 ## Roadmap
 ### Technical
