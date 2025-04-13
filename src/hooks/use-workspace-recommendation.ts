@@ -4,23 +4,25 @@ import { getAllReviews } from "@/functionalities/new";
 // import dotenv from "dotenv";
 // dotenv.config();
 
-async function makeRequest(systemPrompt: string) {
+async function makeRequest(systemPrompt: string, userPromt: string) {
     // const fetch = require('node-fetch');
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer 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",
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
             model: "deepseek/deepseek-chat", // Or "deepseek-coder" if applicable
             messages: [
-                { role: "system", content: systemPrompt }
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPromt}
             ]
         })
     });
 
     const data = await response.json();
+    console.log(data)
     return data.choices[0].message.content;
 }
 
@@ -74,9 +76,10 @@ async function askAI(user_request: string = '', requirements: string[] = []) {
 
     const str_input = JSON.stringify(user_input);
     const str_metrics = JSON.stringify(metrics);
-    const promt = systemPrompt + '\n' + str_input + '\n**Dataset**\n' + str_metrics;
-    const result = await makeRequest(promt);
-    return result
+    const promt = str_input + '\n**Dataset**\n' + str_metrics;
+    const result = await makeRequest(systemPrompt, promt);
+    console.log(result);
+    return result;
 }
 
 export {askAI}
