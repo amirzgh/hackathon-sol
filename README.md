@@ -63,9 +63,6 @@ In return, businesses gain increased visibility through reviews and foot traffic
 
 ## Usage
 
-
-
-
 **Landing page**:
 
 ![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/landing_screen.jpg "Landing page")
@@ -78,17 +75,18 @@ In return, businesses gain increased visibility through reviews and foot traffic
 
 Connection to Phantom wallet is revealed when user clicks on wallet icon.
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/connect_phantom.jpg "Connect phantom")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/connect_phantom.jpg" alt="Connect phantom" width="300"/>
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/view_phantom_wallet.jpg "Wallet view")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/view_phantom_wallet.jpg" alt="Wallet view" width="300"/>
+
 
 **User input for workspace recommendation**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/recommendation_system_inpt.jpg "Input for rec system")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/recommendation_system_inpt.jpg" alt="Input for rec system" width="400"/>
 
 **User interface for rating workspace**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/rate_workspace.jpg "UI rating")
+<img src="https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/rate_workspace.jpg" alt="UI rating" width="400"/>
 
 ## Roadmap
 ### Technical
