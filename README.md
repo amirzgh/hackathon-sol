@@ -66,11 +66,11 @@ In return, businesses gain increased visibility through reviews and foot traffic
 
 **Landing page**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/landing_screen.jpg "Landing page")
+![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/landing_screen.jpg "Landing page")
 
 **Workspace card**:
 
-![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/view_workspace_metrics.jpg "Workspace card")
+![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/view_workspace_metrics.jpg "Workspace card")
 
 **Phantom wallet**:
 
