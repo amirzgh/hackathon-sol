@@ -76,9 +76,9 @@ In return, businesses gain increased visibility through reviews and foot traffic
 
 Connection to Phantom wallet is revealed when user clicks on wallet icon.
 
-![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/connect_phantom.jpg "Connect phantom")
+![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/connect_phantom.jpg "Connect phantom")
 
-![alt text](https://github.com/amirzgh/hackathon-sol/src/common/images/view_phantom_wallet.jpg "Wallet view")
+![alt text](https://github.com/amirzgh/hackathon-sol/blob/main/src/common/images/view_phantom_wallet.jpg "Wallet view")
 
 **User input for workspace recommendation**:
 
