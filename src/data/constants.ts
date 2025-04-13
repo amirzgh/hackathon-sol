@@ -1,0 +1,2 @@
+const REVIEWER_AMOUNT = 0.05
+const CONSUMER_AMOUNT = 0.05
