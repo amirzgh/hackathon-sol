@@ -1,4 +1,4 @@
-import { getReviews, reviewer_transaction } from '@/functionalities/new';
+import { getAllReviews, reviewer_transaction } from '@/functionalities/new';
 import { useWorkspaceRecommendation } from '@/hooks/use-workspace-recommendation';
 function TestAi() {
     
