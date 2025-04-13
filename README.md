@@ -1,4 +1,4 @@
-> following submission instructions [here](https://encodeclub.notion.site/Hackathon-Submissions-1ae6c123e77d815c8f1cc600cc14efd5)
+> TODO: mention phantom wallet integration
 
 # Cowork Connect
 - **Event**: [Encode AI London 2025](https://lu.ma/AI-London-2025)
@@ -24,7 +24,7 @@ Users can request personalized workspace recommendations by specifying a mix of 
 The system aggregates reviews from the Solana blockchain, transforms them into a structured dataset, and uses the DeepSeek large language model to recommend the best-fit venue.
 Users who take up a recommendation and submit a review for it also receive a SOL incentive.
 
-### 3. Business Model
+### 3. Business-side
 
 Businesses fund these incentives by purchasing SOL, which is then distributed to users through the app.
 In return, businesses gain increased visibility through reviews and foot traffic driven by recommendations.
@@ -36,8 +36,14 @@ In return, businesses gain increased visibility through reviews and foot traffic
 **DeepSeek LLM**: Powers the AI recommender system by analyzing aggregated blockchain review data and matching it with user preferences.
 
 ## Built With
-> replace with actual tech stack
 * [![Next][Next.js]][Next-url]
+* [![TypeScript][TypeScript]][TypeScript-url]
+* [![Vite][Vite]][Vite-url]
+* [![Tailwind][Tailwind]][Tailwind-url]
+* [![SolanaWeb3][SolanaWeb3]][SolanaWeb3-url]
+* [![QuickNode][QuickNode]][QuickNode-url]
+* [![DeepSeek][DeepSeek]][DeepSeek-url]
+
 
 ## Getting started
 > insert instructions for running it locally
@@ -63,8 +69,9 @@ This is an example of how to list things you need to use the software and how to
 3. More steps
 
 
-## Demo
-> insert demo video (max 3 min) demonstrating functionalities (as per submission instructions)
+## Usage
+> insert images and text explanation
+> optional: insert demo video (max 3 min) demonstrating functionalities
 
 
 ## Roadmap
@@ -79,3 +86,21 @@ This is an example of how to list things you need to use the software and how to
 <!-- LINKS -->
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
+
+[TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+
+[Vite]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
+[Vite-url]: https://vitejs.dev/
+
+[Tailwind]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind-url]: https://tailwindcss.com/
+
+[QuickNode]: https://img.shields.io/badge/QuickNode-26C281?style=for-the-badge&logo=quicknode&logoColor=white
+[QuickNode-url]: https://www.quicknode.com/
+
+[DeepSeek]: https://img.shields.io/badge/DeepSeek-4B0082?style=for-the-badge&logo=quicknode&logoColor=white
+[DeepSeek-url]: https://deepseek.com/
+
+[SolanaWeb3]: https://img.shields.io/badge/Solana_Web3.js-9945FF?style=for-the-badge&logo=solana&logoColor=white
+[SolanaWeb3-url]: https://solana-labs.github.io/solana-web3.js/
