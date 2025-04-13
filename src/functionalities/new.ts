@@ -1,6 +1,8 @@
 import { Metrics } from '@/types/metrics'
 import * as web3 from '@solana/web3.js'
 
+import { REVIEWER_AMOUNT } from '../data/constants'
+
 // const CONSUMER = '5gDR1bJHmuBQg74svbMLdrdvBgKPHpJAa1P6QrFL4x6Q'
 export const WORKSPACES = [
   Uint8Array.from([
@@ -46,8 +48,8 @@ const connection = new web3.Connection(
 async function reviewer_transaction(
   sender: number,
   reviewer: number,
-  metrics: Metrics,
-): Promise<{ success: boolean; signature?: string; error?: string }> {
+  metrics?: Metrics,
+  amount: number = REVIEWER_AMOUNT): Promise<{ success: boolean; signature?: string; error?: string }> {
   try {
     const secretKey = Uint8Array.from(WORKSPACES[sender])
     const senderKeypair = web3.Keypair.fromSecretKey(secretKey)
@@ -73,18 +75,20 @@ async function reviewer_transaction(
       web3.SystemProgram.transfer({
         fromPubkey: senderPubKey,
         toPubkey: receiverPubKey,
-        lamports: web3.LAMPORTS_PER_SOL * 0.000000001, // 0.01 SOL
+        lamports: web3.LAMPORTS_PER_SOL * amount, // 0.05 by default SOL
       }),
     )
 
     // 2. Add memo instruction
-    transaction.add(
-      new web3.TransactionInstruction({
-        keys: [{ pubkey: senderPubKey, isSigner: true, isWritable: true }],
-        data: Buffer.from(message, 'utf-8'),
-        programId: new web3.PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr'),
-      }),
-    )
+    if (metrics) {
+      transaction.add(
+        new web3.TransactionInstruction({
+          keys: [{ pubkey: senderPubKey, isSigner: true, isWritable: true }],
+          data: Buffer.from(message, 'utf-8'),
+          programId: new web3.PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr'),
+        }),
+      )
+    }
 
     // Send transaction
     const signature = await web3.sendAndConfirmTransaction(connection, transaction, [senderKeypair])
