@@ -15,8 +15,7 @@ https://github.com/user-attachments/assets/8d8f5323-bb4e-44ab-93f6-1f4dfa944b10
 ### 1. Submit Reviews & Earn SOL
 
 Users visit coworking spaces and submit reviews based on predefined metrics like noise level, internet speed, and charging socket availability.
-Each review is recorded as a unique Solana transaction, with the review details stored in the transaction memo.
-For this proof of concept, rewards are distributed to a hard-coded wallet address within the application. In a future version, we plan to integrate Phantom wallet support for seamless, user-owned transactions.
+Each review is recorded as a unique Solana transaction, with the review details stored in the transaction memo. Upon submission, the user is immediately rewarded with a fixed amount of SOL via their Phantom wallet.
 
 ### 2. AI-Powered Workspace Recommendations
 
