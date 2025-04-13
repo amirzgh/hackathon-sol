@@ -1,65 +1,30 @@
 'use client'
 
-import { User } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { Wallet } from 'lucide-react'
+import { useRef, useState } from 'react'
 import { useUser } from '@/contexts/user-context'
-
-export type UserProfile = {
-  id: number
-  name: string
-  initials: string
-}
+import { useGetBalance } from '@/components/account/account-data-access'
+import { AccountButtons } from '@/components/account/account-ui'
 
 export function UserProfileButton() {
   const [showProfile, setShowProfile] = useState(false)
-  const { activeUser, setActiveUser } = useUser()
+  const { walletPublicKey, walletConnected, connectWallet, disconnectWallet } = useUser()
   const profileRef = useRef<HTMLDivElement>(null)
 
-  const users: UserProfile[] = [
-    {
-      id: 0,
-      name: 'Bill',
-      initials: 'B',
-    },
-    {
-      id: 1,
-      name: 'Nick',
-      initials: 'N',
-    },
-    {
-      id: 2,
-      name: 'Cap',
-      initials: 'C',
-    },
-    {
-      id: 3,
-      name: 'EncodeBot',
-      initials: 'E',
-    },
-  ]
+  const { data: balance, isLoading } = useGetBalance({
+    address: walletConnected ? walletPublicKey : undefined,
+  })
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
-        setShowProfile(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
-
-  const handleUserSwitch = (user: UserProfile) => {
-    setActiveUser(user)
-    setShowProfile(false)
-  }
+  const formattedBalance = (balance ? balance / 1_000_000_000 : 0).toFixed(2)
 
   return (
     <div className="relative">
-      <button onClick={() => setShowProfile(!showProfile)} className="btn btn-circle btn-ghost">
-        <User className="h-6 w-6" />
+      <button
+        onClick={() => setShowProfile(!showProfile)}
+        className="btn btn-circle btn-ghost"
+        aria-label="Wallet profile"
+      >
+        <Wallet className="h-5 w-5" />
       </button>
 
       {showProfile && (
@@ -68,67 +33,54 @@ export function UserProfileButton() {
           className="absolute right-0 mt-2 w-64 bg-base-200 rounded-lg shadow-xl z-50 animate-fadeIn"
         >
           <div className="p-4">
-            {/* Active User */}
-            <div className="flex items-center gap-3 mb-3 p-2 bg-base-300 rounded-lg">
-              <div className="avatar">
-                <div
-                  className="w-10 rounded-full"
-                  style={{
-                    background: `linear-gradient(to right, #c62ef8, #21e3b6)`,
-                  }}
-                >
-                  <span className="text-sm text-white font-bold flex items-center justify-center h-full">
-                    {activeUser.initials}
-                  </span>
+            {walletConnected ? (
+              <>
+                <div className="flex items-center gap-3 mb-3 p-2 bg-base-300 rounded-lg">
+                  <div className="avatar placeholder">
+                    <div className="w-10 rounded-full bg-gradient-to-r from-[#9945FF] to-[#14F195]">
+                      <span className="text-white text-sm">PH</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-bold">Phantom Wallet</h3>
+                    <p className="text-xs opacity-70">
+                      {walletPublicKey?.toString().slice(0, 4)}...
+                      {walletPublicKey?.toString().slice(-4)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h3 className="font-bold">{activeUser.name}</h3>
-              </div>
-            </div>
 
-            <div className="divider my-1"></div>
+                <div className="divider my-1"></div>
 
-            {/* Other Users */}
-            <div className="space-y-1 max-h-60 overflow-y-auto">
-              {users
-                .filter((u) => u.id !== activeUser.id)
-                .map((user) => (
-                  <button
-                    key={user.id}
-                    onClick={() => handleUserSwitch(user)}
-                    className="flex items-center gap-3 w-full p-2 hover:bg-base-300 rounded-lg transition-colors"
-                  >
-                    <div className="avatar">
-                      <div
-                        className="w-8 rounded-full"
-                        style={{
-                          background: `linear-gradient(to right, #818dd3, #21e3b6)`,
-                        }}
-                      >
-                        <span className="text-xs text-white font-bold flex items-center justify-center h-full">
-                          {user.initials}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-left">
-                      <h3 className="text-sm font-medium">{user.name}</h3>
-                    </div>
-                  </button>
-                ))}
-            </div>
+                <div className="mb-2">
+                  <p className="text-sm opacity-70">Wallet Balance</p>
+                  <p className="font-bold flex items-center gap-1">
+                    {isLoading ? (
+                      <span className="loading loading-spinner loading-xs"></span>
+                    ) : (
+                      <span>{formattedBalance} SOL</span>
+                    )}
+                  </p>
+                </div>
 
-            <div className="divider my-1"></div>
+                {walletPublicKey && (
+                  <div className="my-2">
+                    <AccountButtons address={walletPublicKey} />
+                  </div>
+                )}
 
-            {/* Wallet and Sign Out */}
-            <div className="mb-2">
-              <p className="text-sm opacity-70">Wallet Balance</p>
-              <p className="font-bold flex items-center gap-1">
-                <span>2.45 SOL</span>
-              </p>
-            </div>
+                <div className="divider my-1"></div>
 
-            <button className="btn btn-sm btn-outline w-full mt-2">Sign Out</button>
+                <button onClick={disconnectWallet} className="btn btn-sm btn-outline w-full">
+                  Disconnect Phantom
+                </button>
+              </>
+            ) : (
+              <button onClick={connectWallet} className="btn btn-primary w-full gap-2">
+                <Wallet className="h-4 w-4" />
+                Connect Phantom
+              </button>
+            )}
           </div>
         </div>
       )}

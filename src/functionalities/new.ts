@@ -2,7 +2,7 @@ import { Metrics } from '@/types/metrics'
 import * as web3 from '@solana/web3.js'
 
 // const CONSUMER = '5gDR1bJHmuBQg74svbMLdrdvBgKPHpJAa1P6QrFL4x6Q'
-const WORKSPACES = [
+export const WORKSPACES = [
   Uint8Array.from([
     234, 189, 237, 248, 188, 42, 103, 162, 67, 204, 67, 55, 49, 86, 14, 144, 13, 42, 211, 94, 39, 79, 180, 83, 233, 2,
     145, 73, 207, 49, 107, 196, 176, 86, 187, 225, 192, 123, 16, 14, 11, 166, 232, 113, 194, 55, 156, 238, 155, 96, 10,
@@ -30,7 +30,7 @@ const WORKSPACES = [
   ]),
 ]
 
-const REVIEWERS = [
+export const REVIEWERS = [
   '89UwaxCqWu6r9TUyJA27sSHHK2MZ8cMSQWPu228Lkh2z',
   'fEaMmKr3ukF1zsmBNuXYUmisE9x8CGX5rMCmEcmGLSt',
   'WSR85yUjhFuyDvGpg5CADqy4rKEnNFasYweMQSYge1a',

@@ -1,36 +1,54 @@
-// contexts/user-context.tsx
 'use client'
 
-import { createContext, useContext, useState } from 'react';
-import { UserProfile } from '../components/layout/user-profile';
+import { createContext, useContext, useState } from 'react'
+import { PublicKey } from '@solana/web3.js'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 type UserContextType = {
-  activeUser: UserProfile;
-  setActiveUser: (user: UserProfile) => void;
-};
+  walletPublicKey: PublicKey | undefined
+  walletConnected: boolean
+  connectWallet: () => Promise<void>
+  disconnectWallet: () => Promise<void>
+}
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [activeUser, setActiveUser] = useState<UserProfile>({
-    id: 0,
-    name: 'Bill',
-    initials: 'B',
-  });
+  const { publicKey, connect, disconnect } = useWallet()
+  const [walletConnected, setWalletConnected] = useState(false)
+
+  const connectWallet = async () => {
+    try {
+      await connect()
+      setWalletConnected(true)
+    } catch (error) {
+      console.error('Phantom connection failed:', error)
+    }
+  }
+
+  const disconnectWallet = async () => {
+    await disconnect()
+    setWalletConnected(false)
+  }
 
   return (
-    <UserContext.Provider value={{ activeUser, setActiveUser }}>
+    <UserContext.Provider
+      value={{
+        walletPublicKey: publicKey || undefined,
+        walletConnected,
+        connectWallet,
+        disconnectWallet,
+      }}
+    >
       {children}
     </UserContext.Provider>
-  );
+  )
 }
 
 export function useUser() {
-  const context = useContext(UserContext);
+  const context = useContext(UserContext)
   if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useUser must be used within a UserProvider')
   }
-  return context;
+  return context
 }
-
-// Wrap your app with UserProvider in layout.tsx

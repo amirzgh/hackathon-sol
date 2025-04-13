@@ -13,12 +13,16 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { useTransactionToast } from '../ui/ui-layout'
 
-export function useGetBalance({ address }: { address: PublicKey }) {
+export function useGetBalance({ address }: { address?: PublicKey }) {
   const { connection } = useConnection()
 
   return useQuery({
     queryKey: ['get-balance', { endpoint: connection.rpcEndpoint, address }],
-    queryFn: () => connection.getBalance(address),
+    queryFn: () => {
+      if (!address) throw new Error('No address provided')
+      return connection.getBalance(address)
+    },
+    enabled: !!address,
   })
 }
 
